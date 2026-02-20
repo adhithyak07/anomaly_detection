@@ -28,7 +28,17 @@ use_sample = st.sidebar.checkbox("Use sample dataset", value=True)
 if use_sample and uploaded_file is None:
     # Load the default dataset
     try:
-        df = pd.read_csv('embedded_system_network_security_dataset.csv')
+        import os
+
+if use_sample and uploaded_file is None:
+    try:
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(BASE_DIR, "embedded_system_network_security_dataset.csv")
+        df = pd.read_csv(file_path)
+        st.sidebar.success("✓ Sample dataset loaded")
+    except Exception as e:
+        st.error(f"Dataset file not found. Error: {e}")
+        st.stop()
         st.sidebar.success("✓ Sample dataset loaded")
     except FileNotFoundError:
         st.error("Dataset file not found. Please upload a CSV file.")
@@ -294,4 +304,5 @@ with tab4:
 st.divider()
 st.caption("🔬 Traffic Flow Anomaly Detection System | Powered by Streamlit")
  
+
  
